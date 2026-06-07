@@ -1,120 +1,418 @@
 # Especificación Técnica - E-commerce Bodega Fralexis
 
-**Versión:** 1.1.0
-**Fecha:** 29 de abril de 2026
+**Versión:** 2.0.0
+**Fecha:** Junio 2026
 **Estado:** Documento Técnico de Referencia
 
-## 1. Introducción
-Este documento detalla la arquitectura técnica y funcional del sistema "Bodega Fralexis". El proyecto está construido sobre Node.js utilizando una arquitectura orientada a objetos (POO) con un patrón de diseño en capas (Controller-Service-Repository), asegurando escalabilidad y mantenibilidad.
+---
+
+# 1. Introducción
+
+Este documento describe la arquitectura técnica y funcional del sistema **Bodega Fralexis**, una aplicación de gestión para una bodega virtual desarrollada utilizando **Node.js**, **Express.js**, **MariaDB** y principios de **Programación Orientada a Objetos (POO)**.
+
+El sistema permite administrar vinos, clientes, categorías, pedidos y detalles de pedidos mediante una API REST organizada en capas para facilitar el mantenimiento y la escalabilidad.
 
 ---
 
-## 2. Stack Tecnológico
-*   **Entorno de Ejecución:** Node.js (v18+)
-*   **Framework Web:** Express.js
-*   **Gestión de Módulos:** ES Modules (import/export)
-*   **Persistencia:** Archivos JSON locales (Simulación de base de datos NoSQL)
-*   **Formato de Intercambio:** JSON
+# 2. Stack Tecnológico
+
+* **Entorno de Ejecución:** Node.js
+* **Framework Web:** Express.js
+* **Base de Datos:** MariaDB
+* **Gestión de Módulos:** ES Modules (import/export)
+* **Acceso a Datos:** mysql2
+* **Formato de Intercambio:** JSON
+* **Control de Versiones:** Git y GitHub
 
 ---
 
-## 3. Arquitectura del Sistema
+# 3. Arquitectura del Sistema
 
-El sistema implementa una **Arquitectura en Capas**:
+El sistema implementa una arquitectura en capas basada en el patrón:
 
-### 3.1 Capa de Aplicación (Entry Point)
-*   `src/app.js`: Configuración del servidor Express, middlewares de parsing y enrutamiento global.
+Controller → Service → Repository → Database
 
-### 3.2 Capa de Controladores y Rutas
-*   Maneja las peticiones HTTP, extrae parámetros y delega la lógica a los servicios.
-*   **Rutas:** `vinoRoutes.js`, `clienteRoutes.js`, `categoriaRoutes.js`.
-*   **Controladores:** Encargados de enviar las respuestas con los códigos de estado HTTP adecuados (200, 201, 404, 500).
+## 3.1 Capa de Aplicación
 
-### 3.3 Capa de Servicio (Business Logic)
-*   Contiene la lógica de negocio central.
-*   Realiza la instanciación de objetos de dominio a partir de datos crudos (hidratación de objetos).
-*   **`ClienteService`**: Implementa lógica de fábrica para instanciar `ClienteMinorista` o `ClienteMayorista` según el tipo.
-*   **`VinoService`**: Gestiona lógica de precios dinámicos y actualizaciones de stock.
+### app.js
 
-### 3.4 Capa de Modelo (Domain Model)
-*   Define las entidades de negocio utilizando clases de JavaScript.
-*   **Herencia:** `Vino` extiende de `Producto`. `ClienteMayorista` y `ClienteMinorista` extienden de `Cliente`.
-*   **Polimorfismo:** Los tipos de cliente manejan atributos específicos (como `cuit`) y se comportan de forma distinta en el flujo de negocio.
+Responsable de:
 
-### 3.5 Capa de Datos (Persistence)
-*   **`JsonRepository`**: Clase genérica que implementa el patrón Repository para operaciones CRUD asíncronas sobre archivos `.json`. Centraliza el acceso a `fs/promises`.
+* Inicializar Express.
+* Configurar middlewares.
+* Registrar rutas.
+* Iniciar el servidor HTTP.
 
 ---
 
-## 4. Modelo de Datos Detallado
+## 3.2 Capa de Rutas
 
-### 4.1 Entidades de Catálogo
-*   **`Producto`**: Clase base (id, nombre, marca, precioMinorista, precioMayorista, stock, esOferta).
-*   **`Vino`**: Hereda de `Producto` y añade (tipoUva, tipoVino, anoCosecha, tamanoMl).
-*   **`Categoria`**: Entidad independiente para clasificación (id, nombre, descripcion).
+Define los endpoints de la API:
 
-### 4.2 Entidades de Usuarios
-*   **`Cliente`**: Clase base (id, nombre, apellido, email, telefono, direccionEnvio).
-*   **`ClienteMinorista`**: Especialización con `tipo: 'MINORISTA'`.
-*   **`ClienteMayorista`**: Especialización con `tipo: 'MAYORISTA'` y atributo `cuit`.
+* vinoRoutes.js
+* clienteRoutes.js
+* categoriaRoutes.js
+* pedidoRoutes.js
+* detallePedidoRoutes.js
 
 ---
 
-## 5. API REST Endpoints
+## 3.3 Capa de Controladores
 
-### 5.1 Gestión de Vinos (`/api/vinos`)
-| Método | Endpoint | Descripción |
-| :--- | :--- | :--- |
-| GET | `/` | Retorna todos los vinos (instanciados). |
-| GET | `/:id` | Retorna un vino por ID. |
-| POST | `/` | Crea un nuevo vino. |
-| PUT | `/:id` | Actualiza un vino existente. |
-| DELETE | `/:id` | Elimina un vino del catálogo. |
+Responsable de:
 
-### 5.2 Gestión de Clientes (`/api/clientes`)
-| Método | Endpoint | Descripción |
-| :--- | :--- | :--- |
-| GET | `/` | Listado de clientes (polimórfico). |
-| GET | `/:id` | Detalle de un cliente específico. |
-| POST | `/` | Registra un cliente (Minorista o Mayorista). |
-| PUT | `/:id` | Actualiza datos del cliente. |
-| DELETE | `/:id` | Baja del registro de cliente. |
+* Recibir solicitudes HTTP.
+* Validar parámetros básicos.
+* Delegar la lógica a los servicios.
+* Devolver respuestas HTTP.
 
-### 5.3 Gestión de Categorías (`/api/categorias`)
-| Método | Endpoint | Descripción |
-| :--- | :--- | :--- |
-| GET | `/` | Retorna todas las categorías. |
-| GET | `/:id` | Busca categoría por ID. |
-| POST | `/` | Crea una nueva categoría de productos. |
-| PUT | `/:id` | Modifica una categoría. |
-| DELETE | `/:id` | Elimina una categoría. |
+Controladores:
+
+* VinoController
+* ClienteController
+* CategoriaController
+* PedidoController
+* DetallePedidoController
 
 ---
 
-## 6. Estructura de Directorios
+## 3.4 Capa de Servicios
+
+Contiene la lógica de negocio.
+
+Servicios:
+
+* VinoService
+* ClienteService
+* CategoriaService
+* PedidoService
+* DetallePedidoService
+
+Responsabilidades:
+
+* Orquestar operaciones.
+* Aplicar reglas de negocio.
+* Transformar datos.
+* Instanciar objetos de dominio.
+
+---
+
+## 3.5 Capa Repository
+
+Responsable de la persistencia de datos.
+
+Repositories:
+
+* VinoRepository
+* ClienteRepository
+* PedidoRepository
+* DetallePedidoRepository
+
+Funciones:
+
+* Ejecutar consultas SQL.
+* Conectarse a MariaDB.
+* Encapsular el acceso a datos.
+
+---
+
+## 3.6 Base de Datos
+
+Motor utilizado:
+
+**MariaDB**
+
+Base de datos:
+
+```sql
+bodega
+```
+
+Tablas principales:
+
+* vino
+* cliente
+* categoria
+* pedido
+* detalle_pedido
+
+---
+
+# 4. Modelo de Dominio
+
+## 4.1 Productos
+
+### Producto
+
+Clase base.
+
+Atributos:
+
+* id
+* nombre
+* marca
+* precioMinorista
+* precioMayorista
+* stock
+* esOferta
+
+---
+
+### Vino
+
+Hereda de Producto.
+
+Atributos adicionales:
+
+* tipoUva
+* tipoVino
+* anoCosecha
+* tamanoMl
+
+---
+
+## 4.2 Clientes
+
+### Cliente
+
+Clase base.
+
+Atributos:
+
+* id
+* nombre
+* apellido
+* email
+* telefono
+* direccionEnvio
+
+---
+
+### ClienteMinorista
+
+Hereda de Cliente.
+
+Atributo:
+
+* tipo = MINORISTA
+
+---
+
+### ClienteMayorista
+
+Hereda de Cliente.
+
+Atributos:
+
+* tipo = MAYORISTA
+* cuit
+
+---
+
+## 4.3 Categorías
+
+### Categoria
+
+Atributos:
+
+* id
+* nombre
+* descripcion
+
+---
+
+## 4.4 Pedidos
+
+### Pedido
+
+Representa una compra realizada por un cliente.
+
+Atributos principales:
+
+* id_pedido
+* id_cliente
+* estado
+* total
+* fecha
+
+---
+
+## 4.5 Detalle de Pedido
+
+### DetallePedido
+
+Representa los productos incluidos en un pedido.
+
+Atributos:
+
+* id_detalle
+* id_pedido
+* id_vino
+* cantidad
+* precio_unitario
+* subtotal
+
+---
+
+# 5. API REST
+
+## 5.1 Vinos
+
+Ruta base:
+
+```http
+/api/vinos
+```
+
+| Método | Endpoint |
+| ------ | -------- |
+| GET    | /        |
+| GET    | /:id     |
+| POST   | /        |
+| PUT    | /:id     |
+| DELETE | /:id     |
+
+---
+
+## 5.2 Clientes
+
+Ruta base:
+
+```http
+/api/clientes
+```
+
+| Método | Endpoint |
+| ------ | -------- |
+| GET    | /        |
+| GET    | /:id     |
+| POST   | /        |
+| PUT    | /:id     |
+| DELETE | /:id     |
+
+---
+
+## 5.3 Categorías
+
+Ruta base:
+
+```http
+/api/categorias
+```
+
+| Método | Endpoint |
+| ------ | -------- |
+| GET    | /        |
+| GET    | /:id     |
+| POST   | /        |
+| PUT    | /:id     |
+| DELETE | /:id     |
+
+---
+
+## 5.4 Pedidos
+
+Ruta base:
+
+```http
+/api/pedidos
+```
+
+| Método | Endpoint |
+| ------ | -------- |
+| GET    | /        |
+| GET    | /:id     |
+| POST   | /        |
+
+---
+
+## 5.5 Detalle de Pedido
+
+Ruta base:
+
+```http
+/api/detalle-pedido
+```
+
+| Método | Endpoint |
+| ------ | -------- |
+| GET    | /        |
+| GET    | /:id     |
+| POST   | /        |
+
+---
+
+# 6. Estructura del Proyecto
+
 ```text
 src/
-├── app.js                # Punto de entrada
-├── controllers/          # Controladores de la API
-├── data/                 # Capa de persistencia (JSON + Repository)
-├── models/               # Clases de dominio (POO)
-├── routes/               # Definición de rutas Express
+│
+├── app.js
+│
+├── config/
+│   └── db.js
+│
+├── controllers/
+│
+├── services/
+│
+├── repositories/
+│
+├── routes/
+│
+├── models/
+│
+└── data/
+```
+
 ---
 
-## 7. Deuda Técnica y Mejoras Sugeridas
+# 7. Principios de Programación Orientada a Objetos
 
-### 7.1 Mejoras Arquitectónicas
-*   **Migración a Base de Datos Real:** Transicionar del `JsonRepository` a una base de datos robusta como **MongoDB** (NoSQL) para flexibilidad en productos o **PostgreSQL** (Relacional) para integridad en pedidos y stock.
-*   **Manejo de Errores Global:** Implementar un middleware centralizado en `app.js` para estandarizar las respuestas de error y reducir la redundancia de bloques `try-catch`.
-*   **Validación de Esquemas:** Integrar librerías como **Joi** o **Zod** para validar los payloads de entrada en los controladores antes de procesar la lógica de negocio.
-*   **Gestión de Variables de Entorno:** Implementar un archivo `.env` (usando `dotenv`) para manejar configuraciones sensibles como puertos, secretos de JWT y rutas de base de datos.
+El proyecto aplica:
 
-### 7.2 Funcionalidades Pendientes / Futuras
-*   **Autenticación y Autorización:** Implementar **JWT (JSON Web Tokens)** para proteger rutas administrativas y gestionar perfiles de clientes.
-*   **Pasarela de Pagos:** Integración con APIs de terceros (Mercado Pago, Stripe) para el cierre del flujo de venta.
-*   **Servicio de Notificaciones:** Implementar **Nodemailer** para el envío automático de correos de confirmación de pedidos y cambios de estado.
-*   **Buscador Avanzado:** Filtros dinámicos multicriterio (cepa, rango de precio, cosecha, ofertas).
+## Encapsulamiento
 
-### 7.3 Documentación y Herramientas
-*   **Documentación de API:** Implementar **Swagger (OpenAPI)** para proveer una interfaz interactiva de pruebas para los endpoints.
-*   **Logs y Monitoreo:** Integrar una herramienta como `winston` o `morgan` para seguimiento de peticiones y errores en producción.
+Las entidades encapsulan sus atributos y comportamiento.
+
+## Herencia
+
+* Producto → Vino
+* Cliente → ClienteMayorista
+* Cliente → ClienteMinorista
+
+## Abstracción
+
+Separación clara entre:
+
+* Controladores
+* Servicios
+* Repositorios
+* Modelos
+
+## Polimorfismo
+
+Los distintos tipos de cliente pueden ser tratados como instancias de Cliente.
+
+---
+
+# 8. Mejoras Futuras
+
+* Autenticación con JWT.
+* Gestión de usuarios y roles.
+* Integración con Mercado Pago.
+* Envío de correos automáticos.
+* Filtros avanzados de búsqueda.
+* Swagger/OpenAPI.
+* Validaciones con Joi o Zod.
+* Middleware global de manejo de errores.
+* Frontend web integrado.
+
+---
+
+# 9. Autores
+
+Proyecto desarrollado para la materia Programación Orientada a Objetos.
+
+**Bodega Fralexis - 2026**
+
