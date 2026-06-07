@@ -1,0 +1,61 @@
+DOCUMENTACIÓN TP GRUPAL POO
+
+Tema: Bodega virtual
+
+Descripción del producto:
+Bodega Fralexis es un sistema de gestión para una bodega virtual. Permite administrar vinos, clientes, pedidos y detalles de pedidos, utilizando una API REST desarrollada con Node.js y Express, conectada a una base de datos MariaDB.
+
+Clases principales utilizadas:
+
+Producto:
+Clase base que representa un producto general del sistema.
+
+Vino:
+Clase que extiende de Producto. Representa los vinos de la bodega e incluye datos como nombre, marca, precio minorista, precio mayorista, stock, tipo de uva, tipo de vino, año de cosecha, tamaño y si está en oferta.
+
+Cliente:
+Clase base que representa a una persona que realiza compras en el sistema.
+
+ClienteMinorista:
+Especialización de Cliente para compradores minoristas.
+
+ClienteMayorista:
+Especialización de Cliente para compradores mayoristas.
+
+Pedido:
+Representa una compra realizada por un cliente. Se relaciona con la tabla cliente mediante id_cliente.
+
+DetallePedido:
+Representa los productos incluidos dentro de un pedido. Se relaciona con pedido mediante id_pedido y con vino mediante id_vino.
+
+Cómo interactúan:
+Un cliente puede realizar uno o varios pedidos.
+Un pedido pertenece a un cliente.
+Un pedido puede tener uno o varios detalles de pedido.
+Cada detalle de pedido referencia a un vino específico.
+El total del pedido se calcula a partir de los subtotales de sus detalles.
+
+Arquitectura utilizada:
+El backend se organiza en capas:
+
+Routes:
+Definen las rutas de la API.
+
+Controllers:
+Reciben las peticiones HTTP y devuelven respuestas.
+
+Services:
+Contienen la lógica de negocio.
+
+Repositories:
+Se encargan de comunicarse con la base de datos MariaDB.
+
+Base de datos:
+La información se almacena en MariaDB mediante tablas como vino, cliente, pedido y detalle_pedido.
+
+Funcionalidades implementadas:
+- CRUD completo de vinos.
+- CRUD completo de clientes.
+- Creación y consulta de pedidos.
+- Creación y consulta de detalles de pedido.
+- Actualización automática del total del pedido a partir de los detalles.

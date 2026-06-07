@@ -1,0 +1,91 @@
+[
+  {
+    "id": "1",
+    "nombre": "Malbec Reserva",
+    "marca": "Fralexis",
+    "precioMinorista": 1500,
+    "precioMayorista": 1200,
+    "stock": 50,
+    "tipoUva": "Malbec",
+    "tipoVino": "Tinto",
+    "anoCosecha": 2022,
+    "tamanoMl": 750,
+    "esOferta": true
+  },
+  {
+    "id": "2",
+    "nombre": "Chardonnay Premium",
+    "marca": "Fralexis",
+    "precioMinorista": 1800,
+    "precioMayorista": 1450,
+    "stock": 30,
+    "tipoUva": "Chardonnay",
+    "tipoVino": "Blanco",
+    "anoCosecha": 2023,
+    "tamanoMl": 750,
+    "esOferta": false
+  },
+  {
+    "esOferta": false
+  },
+  {
+    "nombre": "Syrah Deluxe",
+    "marca": "Fralexis",
+    "precioMinorista": 2100,
+    "precioMayorista": 1800,
+    "stock": 20,
+    "esOferta": true,
+    "tipoUva": "Syrah",
+    "tipoVino": "Tinto",
+    "anoCosecha": 2021,
+    "tamanoMl": 750
+  },
+  {
+    "nombre": "Syrah Deluxe",
+    "marca": "Fralexis",
+    "precioMinorista": 2100,
+    "precioMayorista": 1800,
+    "stock": 20,
+    "esOferta": true,
+    "tipoUva": "Syrah",
+    "tipoVino": "Tinto",
+    "anoCosecha": 2021,
+    "tamanoMl": 750
+  },
+  {
+    "nombre": "Syrah Deluxe",
+    "marca": "Fralexis",
+    "precioMinorista": 2100,
+    "precioMayorista": 1800,
+    "stock": 20,
+    "esOferta": true,
+    "tipoUva": "Syrah",
+    "tipoVino": "Tinto",
+    "anoCosecha": 2021,
+    "tamanoMl": 750
+  },
+  {
+    "nombre": "Syrah Deluxe",
+    "marca": "Fralexis",
+    "precioMinorista": 2100,
+    "precioMayorista": 1800,
+    "stock": 20,
+    "esOferta": true,
+    "tipoUva": "Syrah",
+    "tipoVino": "Tinto",
+    "anoCosecha": 2021,
+    "tamanoMl": 750
+  },
+  {
+    "nombre": "Syrah Deluxe",
+    "marca": "Fralexis",
+    "precioMinorista": 2100,
+    "precioMayorista": 1800,
+    "stock": 20,
+    "esOferta": true,
+    "tipoUva": "Syrah",
+    "tipoVino": "Tinto",
+    "anoCosecha": 2021,
+    "tamanoMl": 750
+  }
+]
