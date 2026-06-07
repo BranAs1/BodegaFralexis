@@ -1,61 +1,207 @@
 DOCUMENTACIÓN TP GRUPAL POO
 
-Tema: Bodega virtual
+Tema: Bodega Virtual
 
 Descripción del producto:
-Bodega Fralexis es un sistema de gestión para una bodega virtual. Permite administrar vinos, clientes, pedidos y detalles de pedidos, utilizando una API REST desarrollada con Node.js y Express, conectada a una base de datos MariaDB.
 
-Clases principales utilizadas:
+Bodega Fralexis es un sistema de gestión para una bodega virtual. Permite administrar vinos, clientes, categorías, pedidos y detalles de pedidos mediante una API REST desarrollada con Node.js y Express, conectada a una base de datos MariaDB.
+
+El objetivo del sistema es facilitar la gestión del catálogo de productos, el control de stock, la administración de clientes y el registro de compras realizadas por los usuarios.
+
+---
+
+CLASES PRINCIPALES UTILIZADAS
 
 Producto:
+
 Clase base que representa un producto general del sistema.
 
+Atributos:
+
+* id
+* nombre
+* marca
+* precioMinorista
+* precioMayorista
+* stock
+* esOferta
+
+---
+
 Vino:
-Clase que extiende de Producto. Representa los vinos de la bodega e incluye datos como nombre, marca, precio minorista, precio mayorista, stock, tipo de uva, tipo de vino, año de cosecha, tamaño y si está en oferta.
+
+Clase que hereda de Producto.
+
+Representa los vinos comercializados por la bodega.
+
+Atributos adicionales:
+
+* tipoUva
+* tipoVino
+* anoCosecha
+* tamanoMl
+
+---
 
 Cliente:
-Clase base que representa a una persona que realiza compras en el sistema.
+
+Clase base que representa a una persona registrada en el sistema.
+
+Atributos:
+
+* id
+* nombre
+* apellido
+* email
+* telefono
+* direccionEnvio
+
+---
 
 ClienteMinorista:
-Especialización de Cliente para compradores minoristas.
+
+Clase que hereda de Cliente.
+
+Representa a los clientes que compran al precio minorista.
+
+Atributos adicionales:
+
+* tipo = MINORISTA
+
+---
 
 ClienteMayorista:
-Especialización de Cliente para compradores mayoristas.
+
+Clase que hereda de Cliente.
+
+Representa a los clientes que compran al precio mayorista.
+
+Atributos adicionales:
+
+* tipo = MAYORISTA
+* cuit
+
+---
+
+Categoria:
+
+Representa una categoría utilizada para clasificar productos.
+
+Atributos:
+
+* id
+* nombre
+* descripcion
+
+---
 
 Pedido:
-Representa una compra realizada por un cliente. Se relaciona con la tabla cliente mediante id_cliente.
+
+Representa una compra realizada por un cliente.
+
+Atributos:
+
+* id
+* idCliente
+* estado
+* total
+* fecha
+
+---
 
 DetallePedido:
-Representa los productos incluidos dentro de un pedido. Se relaciona con pedido mediante id_pedido y con vino mediante id_vino.
 
-Cómo interactúan:
-Un cliente puede realizar uno o varios pedidos.
-Un pedido pertenece a un cliente.
-Un pedido puede tener uno o varios detalles de pedido.
-Cada detalle de pedido referencia a un vino específico.
-El total del pedido se calcula a partir de los subtotales de sus detalles.
+Representa cada producto incluido dentro de un pedido.
 
-Arquitectura utilizada:
-El backend se organiza en capas:
+Atributos:
+
+* id
+* idPedido
+* idVino
+* cantidad
+* precioUnitario
+* subtotal
+
+---
+
+CÓMO INTERACTÚAN LAS CLASES
+
+* Un cliente puede realizar uno o varios pedidos.
+* Un pedido pertenece a un único cliente.
+* Un pedido puede contener uno o varios detalles de pedido.
+* Cada detalle de pedido referencia a un vino específico.
+* El total del pedido se calcula a partir de los subtotales de sus detalles.
+* Las categorías permiten organizar los productos del catálogo.
+
+---
+
+ARQUITECTURA UTILIZADA
+
+El backend se organiza mediante una arquitectura en capas:
 
 Routes:
-Definen las rutas de la API.
+Definen las rutas disponibles de la API REST.
 
 Controllers:
-Reciben las peticiones HTTP y devuelven respuestas.
+Reciben las solicitudes HTTP y generan las respuestas correspondientes.
 
 Services:
-Contienen la lógica de negocio.
+Contienen la lógica de negocio del sistema.
 
 Repositories:
-Se encargan de comunicarse con la base de datos MariaDB.
+Se encargan de realizar las operaciones sobre la base de datos MariaDB.
 
-Base de datos:
-La información se almacena en MariaDB mediante tablas como vino, cliente, pedido y detalle_pedido.
+Models:
+Representan las entidades del dominio mediante clases orientadas a objetos.
 
-Funcionalidades implementadas:
-- CRUD completo de vinos.
-- CRUD completo de clientes.
-- Creación y consulta de pedidos.
-- Creación y consulta de detalles de pedido.
-- Actualización automática del total del pedido a partir de los detalles.
+---
+
+BASE DE DATOS
+
+La información se almacena en MariaDB mediante las tablas:
+
+* vino
+* cliente
+* categoria
+* pedido
+* detalle_pedido
+
+---
+
+CONCEPTOS DE POO APLICADOS
+
+Herencia:
+
+* Producto → Vino
+* Cliente → ClienteMinorista
+* Cliente → ClienteMayorista
+
+Encapsulamiento:
+
+Los atributos y comportamientos relacionados se agrupan dentro de clases específicas.
+
+Abstracción:
+
+La lógica se separa en capas para dividir responsabilidades y facilitar el mantenimiento.
+
+Polimorfismo:
+
+Los distintos tipos de cliente pueden ser tratados como instancias de Cliente mientras mantienen características propias.
+
+Composición:
+
+Un Pedido está compuesto por uno o varios DetallePedido.
+
+---
+
+FUNCIONALIDADES IMPLEMENTADAS
+
+* CRUD completo de vinos.
+* CRUD completo de clientes.
+* CRUD completo de categorías.
+* Creación y consulta de pedidos.
+* Consulta de pedidos por ID.
+* Creación y consulta de detalles de pedido.
+* Consulta de detalles de pedido por ID.
+* Actualización automática del total del pedido a partir de los detalles.
+* Persistencia de datos mediante MariaDB.
