@@ -207,6 +207,36 @@
     <div id="notificacion" class="notificacion"></div>
 
     <!-- SCRIPT -->
+     <div class="chat-widget-wrapper">
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                🍷 Sommelier Virtual
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message ia">
+                    <div class="message-text">¡Hola! Bienvenido a nuestra bodega. Soy tu asistente virtual. ¿Te ayudo a elegir el vino ideal para hoy o preferís consultar por catas?</div>
+                    <span class="message-time">16:00</span>
+                </div>
+            </div>
+            
+            <div class="chat-suggestions">
+                <button class="suggest-btn">🍷 Recomendame un tinto</button>
+                <button class="suggest-btn">📅 Horarios de catas</button>
+                <button class="suggest-btn">🚚 Envíos</button>
+            </div>
+            
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Escribí tu consulta acá...">
+                <button id="send-btn">Enviar</button>
+            </div>
+        </div>
+
+        <button class="chat-bubble" id="chat-bubble">
+            <span>?</span>
+        </button>
+    </div>
+    ```
     <script src="app.js"></script>
 </body>
 </html>

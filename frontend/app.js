@@ -590,3 +590,98 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
         notif.classList.remove('show');
     }, 3000);
 }
+
+
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-input');
+const chatMessages = document.querySelector('.chat-messages');
+const chatBubble = document.getElementById('chat-bubble');
+const chatContainer = document.getElementById('chat-container');
+
+// Manejo de apertura/cierre de la burbuja flotante
+if (chatBubble && chatContainer) {
+    chatBubble.addEventListener('click', () => {
+        chatContainer.classList.toggle('open');
+    });
+}
+
+function obtenerHoraActual() {
+    const ahora = new Date();
+    const horas = String(ahora.getHours()).padStart(2, '0');
+    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+    return `${horas}:${minutos}`;
+}
+
+function sendMessage() {
+    const text = userInput.value.trim();
+    
+    if (text !== "" && chatMessages) {
+        const hora = obtenerHoraActual();
+
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'user');
+        messageDiv.innerHTML = `
+            <div class="message-text">${text}</div>
+            <span class="message-time">${hora}</span>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        userInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        setTimeout(() => {
+            const horaIA = obtenerHoraActual();
+            const iaDiv = document.createElement('div');
+            iaDiv.classList.add('message', 'ia');
+            
+            const mensajeUsuario = text.toLowerCase();
+            let respuestaIA = "Disculpame, no entendí bien. ¿Querés que te recomiende un vino o te brinde información sobre la bodega?";
+
+            if (mensajeUsuario.includes('hola') || mensajeUsuario.includes('buenas')) {
+                respuestaIA = "¡Hola! Qué bueno tenerte por acá. ¿En qué puedo ayudarte hoy?";
+            } 
+            else if (mensajeUsuario.includes('cosecha') && (mensajeUsuario.includes('malbec') || mensajeUsuario.includes('reserva'))) {
+                respuestaIA = "Nuestro Malbec Reserva es de la cosecha año 2022 y actualmente contamos con 20 unidades en stock. ¡Es ideal para guarda!";
+            } 
+            else if (mensajeUsuario.includes('cosecha') && mensajeUsuario.includes('cabernet')) {
+                respuestaIA = "El Cabernet Sauvignon es de la cosecha año 2021. Nos quedan las últimas 15 botellas en stock, ¡así que vuela!";
+            } 
+            else if (mensajeUsuario.includes('cosecha') && mensajeUsuario.includes('merlot')) {
+                respuestaIA = "El Merlot Roble es una joyita de la cosecha año 2020. Nos queda un stock muy limitado de solo 8 unidades.";
+            }
+            else if (mensajeUsuario.includes('tinto') || mensajeUsuario.includes('malbec') || mensajeUsuario.includes('recomendame')) {
+                respuestaIA = "Nuestra especialidad son los tintos. Te recomiendo un Malbec Reserva de Bodega Fralexis, ¡tiene un cuerpo excelente!";
+            } else if (mensajeUsuario.includes('cata') || mensajeUsuario.includes('horario') || mensajeUsuario.includes('reserva')) {
+                respuestaIA = "Hacemos catas guiadas los viernes y sábados a las 19:00 hs. ¿Te gustaría agendar una fecha?";
+            } else if (mensajeUsuario.includes('envio') || mensajeUsuario.includes('envíos')) {
+                respuestaIA = "Realizamos envíos a todo el país. En CABA y GBA te llega a las 24 horas hábiles.";
+            }
+
+            iaDiv.innerHTML = `
+                <div class="message-text">${respuestaIA}</div>
+                <span class="message-time">${horaIA}</span>
+            `;
+            
+            chatMessages.appendChild(iaDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1200);
+    }
+}
+
+if (sendBtn && userInput) {
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+}
+
+document.querySelectorAll('.suggest-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        if (userInput) {
+            userInput.value = button.textContent.replace(/🍷 |📅 |🚚 /, "");
+            sendMessage();
+        }
+    });
+});
