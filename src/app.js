@@ -7,6 +7,7 @@ import pedidoRoutes from "./routes/PedidoRoutes.js";
 import detallePedidoRoutes from "./routes/DetallePedidoRoutes.js";
 import metodoPagoRoutes from "./routes/metodoPagoRoutes.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
+import chatbotRoutes from "./routes/chatbotRoutes.js";
 
 const app = express();
 const PORT = 3000;
@@ -26,6 +27,7 @@ app.use("/api/pedidos", pedidoRoutes);
 app.use("/api/detalle-pedido", detallePedidoRoutes);
 app.use("/api/metodos-pago", metodoPagoRoutes);
 app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor de Bodega Fralexis corriendo en puerto ${PORT}`);

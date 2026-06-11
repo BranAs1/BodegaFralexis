@@ -12,16 +12,14 @@ CREATE TABLE vino (
     id_vino INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     marca VARCHAR(100),
-    precio_minorista DECIMAL(10,2) NOT NULL,
-    precio_mayorista DECIMAL(10,2),
+    precioMinorista DECIMAL(10,2) NOT NULL,
+    precioMayorista DECIMAL(10,2),
     stock INT NOT NULL,
-    tipo_uva VARCHAR(100),
-    tipo_vino VARCHAR(100),
-    ano_cosecha INT,
-    tamano_ml INT,
-    es_oferta BOOLEAN DEFAULT FALSE,
-    id_categoria INT,
-    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+    tipoUva VARCHAR(100),
+    tipoVino VARCHAR(100),
+    anoCosecha INT,
+    tamanoMl INT,
+    esOferta BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE cliente (
@@ -107,13 +105,13 @@ VALUES
 ('Brandon', 'Suarez', 'brandon@gmail.com', '1234', '1122334455', 'Palermo, CABA');
 
 INSERT INTO vino
-(nombre, marca, precio_minorista, precio_mayorista, stock, tipo_uva, tipo_vino, ano_cosecha, tamano_ml, es_oferta, id_categoria)
+(nombre, marca, precioMinorista, precioMayorista, stock, tipoUva, tipoVino, anoCosecha, tamanoMl, esOferta)
 VALUES
-('Malbec Reserva', 'Catena', 12000, 10000, 50, 'Malbec', 'Tinto', 2022, 750, FALSE, 1),
-('Chardonnay Premium', 'Norton', 9500, 8000, 30, 'Chardonnay', 'Blanco', 2023, 750, FALSE, 2),
-('Cabernet Sauvignon', 'Trapiche', 8500, 7000, 40, 'Cabernet Sauvignon', 'Tinto', 2021, 750, TRUE, 1),
-('Rosado Dulce', 'Santa Julia', 7000, 6000, 25, 'Malbec Rosado', 'Rosado', 2023, 750, FALSE, 3),
-('Extra Brut', 'Chandon', 15000, 13000, 20, 'Chardonnay Pinot Noir', 'Espumante', 2022, 750, FALSE, 4);
+('Malbec Reserva', 'Catena', 12000, 10000, 50, 'Malbec', 'Tinto', 2022, 750, FALSE),
+('Chardonnay Premium', 'Norton', 9500, 8000, 30, 'Chardonnay', 'Blanco', 2023, 750, FALSE),
+('Cabernet Sauvignon', 'Trapiche', 8500, 7000, 40, 'Cabernet Sauvignon', 'Tinto', 2021, 750, TRUE),
+('Rosado Dulce', 'Santa Julia', 7000, 6000, 25, 'Malbec Rosado', 'Rosado', 2023, 750, FALSE),
+('Extra Brut', 'Chandon', 15000, 13000, 20, 'Chardonnay Pinot Noir', 'Espumante', 2022, 750, FALSE);
 
 INSERT INTO faq (pregunta, respuesta, categoria)
 VALUES
