@@ -3,6 +3,46 @@ const config = {
     apiUrl: localStorage.getItem('apiUrl') || 'http://localhost:3000'
 };
 
+// ===== MAPEO DE IMÁGENES DE VINOS =====
+const imagenesPorVino = {
+    'Malbec': 'assets/malbec.jpg.png',
+    'Cabernet Sauvignon': 'assets/cabernet.jpg.png',
+    'Sauvignon Blanc': 'assets/suavignonblanc.jpg.png',
+    'Rosado': 'assets/Rose.jpg.png',
+    'Rose': 'assets/Rose.jpg.png',
+    'Chardonnay': 'assets/chardonay.jpg.png',
+    'Torrontés': 'assets/chardonay.jpg.png',
+    'Espumante': 'assets/extrabrut.png',
+    'Espumante Brut': 'assets/extrabrut.png',
+    'Espumante Extra Brut': 'assets/extrabrut.png'
+};
+
+function obtenerImagenVino(vino) {
+    const tipoUva = vino.tipoUva || vino.tipo_uva || '';
+    const nombre = vino.nombre || '';
+    const tipoVino = vino.tipoVino || vino.tipo_vino || '';
+    
+    // Buscar por tipo de uva
+    if (imagenesPorVino[tipoUva]) {
+        return imagenesPorVino[tipoUva];
+    }
+    
+    // Buscar por nombre
+    for (const key in imagenesPorVino) {
+        if (nombre.includes(key)) {
+            return imagenesPorVino[key];
+        }
+    }
+    
+    // Buscar por tipo de vino
+    if (imagenesPorVino[tipoVino]) {
+        return imagenesPorVino[tipoVino];
+    }
+    
+    // Default
+    return 'assets/malbec.jpg.png';
+}
+
 // ===== ESTADO DE LA APLICACIÓN =====
 let todos_los_vinos = [];
 let vinos_filtrados = [];
@@ -178,6 +218,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== EVENT LISTENERS =====
 function setupEventListeners() {
+    // Logo - Volver al listado de vinos
+    document.getElementById('logoClick').addEventListener('click', () => {
+        vinos_filtrados = [...todos_los_vinos];
+        renderizarProductos();
+        // Scroll al inicio
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Cerrar modales si están abiertos
+        cerrarCarrito();
+        cerrarModalProducto();
+        mostrarNotificacion('Volviendo al catálogo completo', 'info');
+    });
+
     // Navbar
     document.getElementById('btnBuscar').addEventListener('click', buscarVinos);
     document.getElementById('inputBusqueda').addEventListener('keypress', (e) => {
@@ -273,10 +325,12 @@ function renderizarProductos() {
     }
 
     mensaje.style.display = 'none';
-    grid.innerHTML = vinos_filtrados.map(vino => `
+    grid.innerHTML = vinos_filtrados.map(vino => {
+        const imagen = obtenerImagenVino(vino);
+        return `
         <div class="card-producto" onclick="abrirModalProducto(${vino.id})">
             <div class="producto-imagen">
-                🍷
+                <img src="${imagen}" alt="${vino.nombre}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px 8px 0 0;">
                 ${vino.esOferta ? '<span class="oferta-badge">¡OFERTA!</span>' : ''}
             </div>
             <div class="producto-info">
@@ -299,7 +353,7 @@ function renderizarProductos() {
                 </button>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 }
 
 // ===== MODAL PRODUCTO =====
@@ -308,6 +362,12 @@ function abrirModalProducto(id) {
     if (!vino) return;
 
     vinoSeleccionado = vino;
+
+    // Actualizar imagen del modal
+    const imagenVino = obtenerImagenVino(vino);
+    const imagenProductoDiv = document.getElementById('imagenProducto');
+    imagenProductoDiv.style.background = 'none';
+    imagenProductoDiv.innerHTML = `<img src="${imagenVino}" alt="${vino.nombre}" style="width: 100%; height: 100%; object-fit: contain;">`;
 
     document.getElementById('detalleNombre').textContent = vino.nombre;
     document.getElementById('detalleMarca').textContent = `${vino.marca} - Año ${vino.anoCosecha || vino.ano_cosecha || 'N/A'}`;
@@ -351,9 +411,16 @@ function renderizarCarrito() {
 
     document.getElementById('btnProcederPago').disabled = false;
 
-    contenido.innerHTML = carrito.map((item, index) => `
+    contenido.innerHTML = carrito.map((item, index) => {
+        // Encontrar el vino para obtener su imagen
+        const vino = todos_los_vinos.find(v => v.id === item.id);
+        const imagen = vino ? obtenerImagenVino(vino) : 'assets/malbec.jpg.png';
+        
+        return `
         <div class="carrito-item">
-            <div class="carrito-item-imagen">🍷</div>
+            <div class="carrito-item-imagen">
+                <img src="${imagen}" alt="${item.nombre}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+            </div>
             <div class="carrito-item-info">
                 <div class="carrito-item-nombre">${item.nombre}</div>
                 <div class="carrito-item-marca">${item.marca}</div>
@@ -368,7 +435,7 @@ function renderizarCarrito() {
                 <button class="carrito-item-eliminar" onclick="eliminarDelCarrito(${index})">🗑️</button>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 
     actualizarResumenCarrito();
 }

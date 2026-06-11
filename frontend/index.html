@@ -10,9 +10,12 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="navbar-container">
-            <div class="logo">
-                <h1>🍷 Bodega Fralexis</h1>
-                <p>Tienda de Vinos Premium</p>
+            <div class="logo" id="logoClick" style="cursor: pointer; display: flex; align-items: center;">
+                <img id="logoImg" src="assets/logo.png" alt="Bodega Fralexis Logo" style="max-height: 80px; margin-right: 15px;">
+                <div>
+                    <h1>Bodega Fralexis</h1>
+                    <p>Tienda de Vinos Premium</p>
+                </div>
             </div>
 
             <div class="navbar-search">
@@ -124,7 +127,7 @@
                 </div>
 
                 <div id="mensajeVacio" class="mensaje-vacio" style="display: none;">
-                    <p>😞 No encontramos vinos con esos filtros</p>
+                    <p>No encontramos vinos con esos filtros</p>
                     <button id="btnVolverFiltros" class="btn-primary">Limpiar Filtros</button>
                 </div>
             </section>

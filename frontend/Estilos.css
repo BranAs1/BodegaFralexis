@@ -5,16 +5,16 @@
 }
 
 :root {
-    --primary-color: #722f37;
+    --primary-color: #642c33;
     --secondary-color: #b8373f;
-    --accent-color: #f4a460;
+    --accent-color: #550000;
     --bg-color: #f5f1e8;
     --text-color: #333;
     --border-color: #ddd;
     --light-bg: #fafaf5;
-    --success-color: #27ae60;
-    --danger-color: #e74c3c;
-    --warning-color: #f39c12;
+    --success-color: #006e2e;
+    --danger-color: #350049;
+    --warning-color: #ac12f3;
 }
 
 body {
@@ -87,7 +87,7 @@ html, body {
 }
 
 .navbar-search button:hover {
-    background: #e0944a;
+    background: #270566;
     transform: translateY(-2px);
 }
 
