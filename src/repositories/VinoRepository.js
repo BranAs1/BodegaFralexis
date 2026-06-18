@@ -1,18 +1,32 @@
 import pool from "../config/db.js";
+import { JsonRepository } from "../data/JsonRepository.js";
 
 export class VinoRepository {
+  static jsonRepo = new JsonRepository('vinos.json');
+
   static async getAll() {
-    const [rows] = await pool.query("SELECT * FROM vino");
-    return rows;
+    try {
+      const [rows] = await pool.query("SELECT * FROM vino");
+      return rows;
+    } catch (error) {
+      console.warn("DB no disponible, cargando vinos desde JSON:", error.message);
+      return await VinoRepository.jsonRepo.getAll();
+    }
   }
 
   static async getById(id) {
-    const [rows] = await pool.query(
-      "SELECT * FROM vino WHERE id_vino = ?",
-      [id]
-    );
+    try {
+      const [rows] = await pool.query(
+        "SELECT * FROM vino WHERE id_vino = ?",
+        [id]
+      );
 
-    return rows[0] || null;
+      if (rows.length > 0) return rows[0];
+    } catch (error) {
+      console.warn("DB no disponible, buscando vino en JSON:", error.message);
+    }
+
+    return await VinoRepository.jsonRepo.getById(id);
   }
 
   static async create(vino) {

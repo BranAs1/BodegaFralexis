@@ -6,7 +6,7 @@ export class VinoService {
     const data = await VinoRepository.getAll();
 
     return data.map(v => new Vino(
-      v.id_vino,
+      v.id_vino ?? v.id,
       v.nombre,
       v.marca,
       v.precioMinorista,
@@ -26,7 +26,7 @@ export class VinoService {
     if (!v) return null;
 
     return new Vino(
-      v.id_vino,
+      v.id_vino ?? v.id,
       v.nombre,
       v.marca,
       v.precioMinorista,
