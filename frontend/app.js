@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     cargarVinos();
     actualizarContadorCarrito();
+    inicializarChatbot();
 });
 
 // ===== EVENT LISTENERS =====
@@ -656,4 +657,85 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
     setTimeout(() => {
         notif.classList.remove('show');
     }, 3000);
+}
+
+// ===== CHATBOT =====
+
+function inicializarChatbot() {
+    const chatBubble = document.getElementById("chat-bubble");
+    const chatContainer = document.getElementById("chat-container");
+    const chatClose = document.getElementById("chat-close");
+    const chatInput = document.getElementById("chat-input");
+    const chatSend = document.getElementById("chat-send");
+
+    chatBubble.addEventListener("click", () => {
+        chatContainer.style.display = "flex";
+        chatBubble.style.display = "none";
+    });
+
+    chatClose.addEventListener("click", () => {
+        chatContainer.style.display = "none";
+        chatBubble.style.display = "flex";
+    });
+
+    chatSend.addEventListener("click", enviarMensajeChat);
+
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            enviarMensajeChat();
+        }
+    });
+}
+
+async function enviarMensajeChat() {
+    const input = document.getElementById("chat-input");
+    const mensajes = document.getElementById("chat-messages");
+
+    const texto = input.value.trim();
+
+    if (!texto) return;
+
+    mensajes.innerHTML += `
+        <div class="chat-message user-message">
+            ${texto}
+        </div>
+    `;
+
+    input.value = "";
+
+    try {
+        const response = await fetch(
+            `${config.apiUrl}/api/chatbot`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    mensaje: texto
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        const textoRespuesta = data.respuesta || data.mensaje || data.error || "No encontré una respuesta para esa consulta.";
+
+mensajes.innerHTML += `
+    <div class="chat-message bot-message">
+        ${textoRespuesta}
+    </div>
+`;
+
+        mensajes.scrollTop = mensajes.scrollHeight;
+
+    } catch (error) {
+        console.error(error);
+
+        mensajes.innerHTML += `
+            <div class="chat-message bot-message">
+                No pude conectarme con el servidor.
+            </div>
+        `;
+    }
 }
