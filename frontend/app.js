@@ -159,6 +159,16 @@ const vinosMock = [
     }
 ];
 
+const pagoDatosPrueba = {
+    nombre: 'María González',
+    email: 'maria.gonzalez@ejemplo.com',
+    direccion: 'Av. Córdoba 2345',
+    ciudad: 'Buenos Aires',
+    tarjeta: '4509 9535 6623 3704',
+    vencimiento: '12/28',
+    cvv: '123'
+};
+
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
@@ -194,6 +204,7 @@ function setupEventListeners() {
     document.getElementById('btnCerrarPago').addEventListener('click', cerrarPago);
     document.getElementById('btnConfirmarPago').addEventListener('click', confirmarPago);
     document.getElementById('btnVolverCarritoPago').addEventListener('click', cancelarPago);
+    document.getElementById('btnCargarDatosPrueba').addEventListener('click', cargarDatosPruebaPago);
     document.querySelectorAll('input[name="metodoEntrega"]').forEach(radio => {
         radio.addEventListener('change', actualizarFormaEntrega);
     });
@@ -273,10 +284,19 @@ function setupEventListeners() {
 
     document.getElementById('btnAgregarDetalle').addEventListener('click', agregarAlCarrito);
 
-    // Mi Cuenta (placeholder)
-    document.getElementById('btnMiCuenta').addEventListener('click', () => {
-        mostrarNotificacion('Funcionalidad de cuenta próximamente', 'info');
-    });
+}
+
+function cargarDatosPruebaPago() {
+    document.getElementById('pagoNombre').value = pagoDatosPrueba.nombre;
+    document.getElementById('pagoEmail').value = pagoDatosPrueba.email;
+    document.getElementById('pagoDireccion').value = pagoDatosPrueba.direccion;
+    document.getElementById('pagoCiudad').value = pagoDatosPrueba.ciudad;
+    document.getElementById('pagoTarjeta').value = pagoDatosPrueba.tarjeta;
+    document.getElementById('pagoVencimiento').value = pagoDatosPrueba.vencimiento;
+    document.getElementById('pagoCvv').value = pagoDatosPrueba.cvv;
+    mostrarNotificacion('Datos de prueba cargados', 'info');
+    actualizarFormaEntrega();
+    renderizarResumenPago();
 }
 
 // ===== CARGAR VINOS =====
