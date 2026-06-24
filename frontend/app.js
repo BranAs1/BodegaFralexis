@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== EVENT LISTENERS =====
+
 function setupEventListeners() {
     // Logo - Volver al listado de vinos
     document.getElementById('logoClick').addEventListener('click', () => {
@@ -277,7 +278,7 @@ function setupEventListeners() {
             document.getElementById('cantidadProducto').value = cantidad - 1;
         }
     });
-
+}
     document.getElementById('btnMas').addEventListener('click', () => {
         let cantidad = parseInt(document.getElementById('cantidadProducto').value);
         document.getElementById('cantidadProducto').value = cantidad + 1;
@@ -285,7 +286,6 @@ function setupEventListeners() {
 
     document.getElementById('btnAgregarDetalle').addEventListener('click', agregarAlCarrito);
 
-}
 
 function cargarDatosPruebaPago() {
     document.getElementById('pagoNombre').value = pagoDatosPrueba.nombre;
@@ -702,60 +702,69 @@ function actualizarContadorCarrito() {
 // ===== FILTROS =====
 function aplicarFiltros() {
     const tipos_seleccionados = Array.from(document.querySelectorAll('.filtro-checkbox:checked'))
-        .map(cb => cb.value);
-    const nombre = document.getElementById('filtroNombre').value.toLowerCase();
+        .map(cb => cb.value.toLowerCase().trim());
+
+    const nombre = document.getElementById('filtroNombre').value.toLowerCase().trim();
     const precioMin = parseInt(document.getElementById('precioMin').value);
     const precioMax = parseInt(document.getElementById('precioMax').value);
     const soloDisponible = document.getElementById('filtroDisponible').checked;
     const soloOfertas = document.getElementById('filtroOferta').checked;
 
+    const tiposVino = ['tinto', 'blanco', 'rosado', 'espumante'];
+
     vinos_filtrados = todos_los_vinos.filter(vino => {
-        // Filtro por tipo
         if (tipos_seleccionados.length > 0) {
-            const tipoVino = vino.tipoVino || vino.tipo_vino || '';
-            if (!tipos_seleccionados.includes(tipoVino)) return false;
+            const tipoVino = (vino.tipoVino || vino.tipo_vino || '').toLowerCase().trim();
+
+            const coincideTipo = tipos_seleccionados.some(tipoSeleccionado => {
+                if (tipoSeleccionado === 'otros') {
+                    return !tiposVino.some(tipo => tipoVino.includes(tipo));
+                }
+
+                return tipoVino.includes(tipoSeleccionado);
+            });
+
+            if (!coincideTipo) return false;
         }
 
-        // Filtro por nombre/marca
         if (nombre) {
-            const nombreCompleto = `${vino.nombre} ${vino.marca}`.toLowerCase();
+            const nombreCompleto = `${vino.nombre || ''} ${vino.marca || ''}`.toLowerCase();
             if (!nombreCompleto.includes(nombre)) return false;
         }
 
-        // Filtro por precio
-        const precio = vino.precioMinorista || vino.precio_minorista || 0;
+        const precio = Number(vino.precioMinorista || vino.precio_minorista || 0);
         if (precio < precioMin || precio > precioMax) return false;
 
-        // Filtro disponibilidad
-        if (soloDisponible && vino.stock === 0) return false;
+        if (soloDisponible && Number(vino.stock) === 0) return false;
 
-        // Filtro ofertas
-        if (soloOfertas && !vino.esOferta) return false;
+        const esOferta =
+            vino.esOferta === true ||
+            vino.esOferta === 1 ||
+            vino.esOferta === '1' ||
+            vino.es_oferta === true ||
+            vino.es_oferta === 1 ||
+            vino.es_oferta === '1';
+
+        if (soloOfertas && !esOferta) return false;
 
         return true;
     });
 
     renderizarProductos();
 }
-
 function limpiarFiltros() {
-    // Limpiar checkboxes
     document.querySelectorAll('.filtro-checkbox').forEach(cb => cb.checked = false);
-    
-    // Limpiar input de nombre
+
     document.getElementById('filtroNombre').value = '';
-    
-    // Resetear rangos de precio
+
     document.getElementById('precioMin').value = 0;
-    document.getElementById('precioMax').value = 5000;
+    document.getElementById('precioMax').value = 20000;
     document.getElementById('precioMinDisplay').textContent = '0';
-    document.getElementById('precioMaxDisplay').textContent = '5000';
-    
-    // Limpiar checkboxes de disponibilidad y ofertas
+    document.getElementById('precioMaxDisplay').textContent = '20000';
+
     document.getElementById('filtroDisponible').checked = false;
     document.getElementById('filtroOferta').checked = false;
 
-    // Aplicar filtros
     vinos_filtrados = [...todos_los_vinos];
     renderizarProductos();
     mostrarNotificacion('Filtros limpios', 'info');
