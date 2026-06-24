@@ -28,7 +28,6 @@
                     🛒 Carrito
                     <span id="contadorCarrito" class="carrito-count">0</span>
                 </button>
-                <button id="btnMiCuenta" class="btn-cuenta">👤 Mi Cuenta</button>
             </div>
         </div>
     </header>
@@ -148,12 +147,73 @@
 
             <div class="modal-footer">
                 <div class="resumen-carrito">
-                    <p>Subtotal: <span id="subtotal">$0</span></p>
-                    <p>Envío: <span id="envio">$0</span></p>
-                    <h3>Total: <span id="totalCarrito">$0</span></h3>
+                    <p>Subtotal: <span id="subtotal">$0.00</span></p>
+                    <p>Envío: <span id="envio">$0.00</span></p>
+                    <h3>Total: <span id="totalCarrito">$0.00</span></h3>
                 </div>
                 <button id="btnProcederPago" class="btn-primary-large">Proceder al Pago</button>
                 <button id="btnContinuarComprando" class="btn-secondary-large">Continuar Comprando</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGO -->
+    <div id="modalPago" class="modal-overlay">
+        <div class="modal-carrito">
+            <div class="modal-header">
+                <h2>💳 Pago y Entrega</h2>
+                <button id="btnCerrarPago" class="btn-close">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nombre completo</label>
+                    <input type="text" id="pagoNombre" placeholder="Nombre y apellido">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="pagoEmail" placeholder="correo@ejemplo.com">
+                </div>
+                <div class="form-group entrega-opciones">
+                    <label>Tipo de retiro</label>
+                    <label><input type="radio" name="metodoEntrega" value="envio" checked> Envío</label>
+                    <label><input type="radio" name="metodoEntrega" value="retiro"> Retiro en local</label>
+                </div>
+                <div id="direccionEnvio">
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" id="pagoDireccion" placeholder="Calle y número">
+                    </div>
+                    <div class="form-group">
+                        <label>Ciudad</label>
+                        <input type="text" id="pagoCiudad" placeholder="Ciudad">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Método de pago</label>
+                    <input type="text" id="pagoTarjeta" placeholder="Número de tarjeta" maxlength="19">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vencimiento</label>
+                        <input type="text" id="pagoVencimiento" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" id="pagoCvv" placeholder="123" maxlength="4">
+                    </div>
+                </div>
+                <div class="resumen-carrito">
+                    <p>Subtotal: <span id="pagoSubtotal">$0.00</span></p>
+                    <p>Envío / Retiro: <span id="pagoEnvio">$0.00</span></p>
+                    <h3>Total a pagar: <span id="pagoTotal">$0.00</span></h3>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnConfirmarPago" class="btn-primary-large">Confirmar Pago</button>
+                <button id="btnVolverCarritoPago" class="btn-secondary-large">Volver al Carrito</button>
+                <button id="btnCargarDatosPrueba" class="btn-secondary-small" type="button">Cargar datos de prueba</button>
             </div>
         </div>
     </div>

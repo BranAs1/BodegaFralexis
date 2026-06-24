@@ -18,7 +18,7 @@ export class JsonRepository {
 
   async getById(id) {
     const items = await this.getAll();
-    return items.find(item => item.id === id);
+    return items.find(item => String(item.id) === String(id));
   }
 
   async create(newItem) {
@@ -30,17 +30,17 @@ export class JsonRepository {
 
   async update(id, updatedItem) {
     let items = await this.getAll();
-    const index = items.findIndex(item => item.id === id);
+    const index = items.findIndex(item => String(item.id) === String(id));
     if (index === -1) return null;
     
-    items[index] = { ...items[index], ...updatedItem, id }; // Ensure ID doesn't change
+    items[index] = { ...items[index], ...updatedItem, id: items[index].id };
     await this.save(items);
     return items[index];
   }
 
   async delete(id) {
     let items = await this.getAll();
-    const filteredItems = items.filter(item => item.id !== id);
+    const filteredItems = items.filter(item => String(item.id) !== String(id));
     if (items.length === filteredItems.length) return false;
     
     await this.save(filteredItems);

@@ -14,7 +14,9 @@ const imagenesPorVino = {
     'Torrontés': 'assets/chardonay.jpg.png',
     'Espumante': 'assets/extrabrut.png',
     'Espumante Brut': 'assets/extrabrut.png',
-    'Espumante Extra Brut': 'assets/extrabrut.png'
+    'Espumante Extra Brut': 'assets/extrabrut.png',
+    'Syrah': 'assets/malbec.jpg.png',
+    'Pinot Noir': 'assets/malbec.jpg.png'
 };
 
 function obtenerImagenVino(vino) {
@@ -54,160 +56,118 @@ const vinosMock = [
     {
         id: 1,
         nombre: "Malbec Reserva",
-        marca: "Finca Fralexis",
+        marca: "Fralexis",
         tipoVino: "Tinto",
         tipoUva: "Malbec",
-        anoCosecha: 2020,
+        anoCosecha: 2022,
         tamanoMl: 750,
-        precioMinorista: 350,
-        precioMayorista: 280,
-        stock: 45,
+        precioMinorista: 1500,
+        precioMayorista: 1200,
+        stock: 50,
         esOferta: true
     },
     {
         id: 2,
-        nombre: "Cabernet Sauvignon",
-        marca: "Finca Fralexis",
-        tipoVino: "Tinto",
-        tipoUva: "Cabernet Sauvignon",
-        anoCosecha: 2019,
+        nombre: "Chardonnay Premium",
+        marca: "Fralexis",
+        tipoVino: "Blanco",
+        tipoUva: "Chardonnay",
+        anoCosecha: 2023,
         tamanoMl: 750,
-        precioMinorista: 380,
-        precioMayorista: 300,
-        stock: 32,
+        precioMinorista: 1800,
+        precioMayorista: 1450,
+        stock: 30,
         esOferta: false
     },
     {
         id: 3,
-        nombre: "Torrontés",
-        marca: "Finca Fralexis",
-        tipoVino: "Blanco",
-        tipoUva: "Torrontés",
-        anoCosecha: 2022,
+        nombre: "Syrah Deluxe",
+        marca: "Fralexis",
+        tipoVino: "Tinto",
+        tipoUva: "Syrah",
+        anoCosecha: 2021,
         tamanoMl: 750,
-        precioMinorista: 280,
-        precioMayorista: 220,
-        stock: 78,
-        esOferta: false
+        precioMinorista: 2100,
+        precioMayorista: 1800,
+        stock: 20,
+        esOferta: true
     },
     {
         id: 4,
-        nombre: "Sauvignon Blanc Premium",
-        marca: "Finca Fralexis",
-        tipoVino: "Blanco",
-        tipoUva: "Sauvignon Blanc",
-        anoCosecha: 2023,
+        nombre: "Cabernet Sauvignon Gran Reserva",
+        marca: "Fralexis",
+        tipoVino: "Tinto",
+        tipoUva: "Cabernet Sauvignon",
+        anoCosecha: 2020,
         tamanoMl: 750,
-        precioMinorista: 320,
-        precioMayorista: 250,
-        stock: 56,
-        esOferta: true
+        precioMinorista: 2200,
+        precioMayorista: 1750,
+        stock: 25,
+        esOferta: false
     },
     {
         id: 5,
         nombre: "Rosado Premium",
-        marca: "Finca Fralexis",
+        marca: "Fralexis",
         tipoVino: "Rosado",
         tipoUva: "Merlot",
-        anoCosecha: 2022,
+        anoCosecha: 2023,
         tamanoMl: 750,
-        precioMinorista: 300,
-        precioMayorista: 240,
-        stock: 41,
+        precioMinorista: 1600,
+        precioMayorista: 1300,
+        stock: 40,
         esOferta: false
     },
     {
         id: 6,
-        nombre: "Espumante Brut",
-        marca: "Finca Fralexis",
+        nombre: "Espumante Extra Brut",
+        marca: "Fralexis",
         tipoVino: "Espumante",
-        tipoUva: "Chardonnay",
-        anoCosecha: 2021,
+        tipoUva: "Pinot Noir",
+        anoCosecha: 2022,
         tamanoMl: 750,
-        precioMinorista: 420,
-        precioMayorista: 330,
-        stock: 28,
+        precioMinorista: 2200,
+        precioMayorista: 1700,
+        stock: 18,
         esOferta: true
     },
     {
         id: 7,
-        nombre: "Merlot Clásico",
-        marca: "Finca Fralexis",
-        tipoVino: "Tinto",
-        tipoUva: "Merlot",
-        anoCosecha: 2021,
+        nombre: "Sauvignon Blanc Premium",
+        marca: "Fralexis",
+        tipoVino: "Blanco",
+        tipoUva: "Sauvignon Blanc",
+        anoCosecha: 2023,
         tamanoMl: 750,
-        precioMinorista: 290,
-        precioMayorista: 230,
-        stock: 64,
+        precioMinorista: 1700,
+        precioMayorista: 1350,
+        stock: 34,
         esOferta: false
     },
     {
         id: 8,
-        nombre: "Pinot Noir Edición Especial",
-        marca: "Finca Fralexis",
-        tipoVino: "Tinto",
-        tipoUva: "Pinot Noir",
-        anoCosecha: 2020,
-        tamanoMl: 750,
-        precioMinorista: 450,
-        precioMayorista: 360,
-        stock: 19,
-        esOferta: true
-    },
-    {
-        id: 9,
-        nombre: "Chardonnay Expresión",
-        marca: "Finca Fralexis",
+        nombre: "Torrontés Clásico",
+        marca: "Fralexis",
         tipoVino: "Blanco",
-        tipoUva: "Chardonnay",
-        anoCosecha: 2022,
+        tipoUva: "Torrontés",
+        anoCosecha: 2024,
         tamanoMl: 750,
-        precioMinorista: 340,
-        precioMayorista: 270,
-        stock: 51,
-        esOferta: false
-    },
-    {
-        id: 10,
-        nombre: "Tannat Gran Reserva",
-        marca: "Finca Fralexis",
-        tipoVino: "Tinto",
-        tipoUva: "Tannat",
-        anoCosecha: 2018,
-        tamanoMl: 750,
-        precioMinorista: 500,
-        precioMayorista: 400,
-        stock: 15,
-        esOferta: true
-    },
-    {
-        id: 11,
-        nombre: "Moscato",
-        marca: "Finca Fralexis",
-        tipoVino: "Blanco",
-        tipoUva: "Moscato",
-        anoCosecha: 2023,
-        tamanoMl: 750,
-        precioMinorista: 260,
-        precioMayorista: 200,
-        stock: 72,
-        esOferta: false
-    },
-    {
-        id: 12,
-        nombre: "Espumante Extra Brut",
-        marca: "Finca Fralexis",
-        tipoVino: "Espumante",
-        tipoUva: "Pinot Noir",
-        anoCosecha: 2022,
-        tamanoMl: 750,
-        precioMinorista: 380,
-        precioMayorista: 300,
-        stock: 34,
+        precioMinorista: 1300,
+        precioMayorista: 1050,
+        stock: 60,
         esOferta: false
     }
 ];
+
+const pagoDatosPrueba = {
+    nombre: 'María González',
+    email: 'maria.gonzalez@ejemplo.com',
+    direccion: 'Av. Córdoba 2345',
+    ciudad: 'Buenos Aires',
+    tarjeta: '4509 9535 6623 3704',
+    vencimiento: '12/28',
+    cvv: '123'
+};
 
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -242,6 +202,43 @@ function setupEventListeners() {
     document.getElementById('btnCerrarCarrito').addEventListener('click', cerrarCarrito);
     document.getElementById('btnContinuarComprando').addEventListener('click', cerrarCarrito);
     document.getElementById('btnProcederPago').addEventListener('click', procederPago);
+    document.getElementById('btnCerrarPago').addEventListener('click', cerrarPago);
+    document.getElementById('btnConfirmarPago').addEventListener('click', confirmarPago);
+    document.getElementById('btnVolverCarritoPago').addEventListener('click', cancelarPago);
+    document.getElementById('btnCargarDatosPrueba').addEventListener('click', cargarDatosPruebaPago);
+    document.querySelectorAll('input[name="metodoEntrega"]').forEach(radio => {
+        radio.addEventListener('change', actualizarFormaEntrega);
+    });
+
+    // Cerrar con clic fuera del modal
+    document.getElementById('modalProducto').addEventListener('click', (event) => {
+        if (event.target.id === 'modalProducto') {
+            cerrarModalProducto();
+        }
+    });
+    document.getElementById('modalPago').addEventListener('click', (event) => {
+        if (event.target.id === 'modalPago') {
+            cancelarPago();
+        }
+    });
+    document.getElementById('modalCarrito').addEventListener('click', (event) => {
+        if (event.target.id === 'modalCarrito') {
+            cerrarCarrito();
+        }
+    });
+
+    // Cerrar modales con Escape
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (document.getElementById('modalProducto').classList.contains('active')) {
+                cerrarModalProducto();
+            } else if (document.getElementById('modalPago').classList.contains('active')) {
+                cerrarPago();
+            } else if (document.getElementById('modalCarrito').classList.contains('active')) {
+                cerrarCarrito();
+            }
+        }
+    });
 
     // Modal Producto
     document.getElementById('btnCerrarProducto').addEventListener('click', cerrarModalProducto);
@@ -288,10 +285,19 @@ function setupEventListeners() {
 
     document.getElementById('btnAgregarDetalle').addEventListener('click', agregarAlCarrito);
 
-    // Mi Cuenta (placeholder)
-    document.getElementById('btnMiCuenta').addEventListener('click', () => {
-        mostrarNotificacion('Funcionalidad de cuenta próximamente', 'info');
-    });
+}
+
+function cargarDatosPruebaPago() {
+    document.getElementById('pagoNombre').value = pagoDatosPrueba.nombre;
+    document.getElementById('pagoEmail').value = pagoDatosPrueba.email;
+    document.getElementById('pagoDireccion').value = pagoDatosPrueba.direccion;
+    document.getElementById('pagoCiudad').value = pagoDatosPrueba.ciudad;
+    document.getElementById('pagoTarjeta').value = pagoDatosPrueba.tarjeta;
+    document.getElementById('pagoVencimiento').value = pagoDatosPrueba.vencimiento;
+    document.getElementById('pagoCvv').value = pagoDatosPrueba.cvv;
+    mostrarNotificacion('Datos de prueba cargados', 'info');
+    actualizarFormaEntrega();
+    renderizarResumenPago();
 }
 
 // ===== CARGAR VINOS =====
@@ -407,6 +413,9 @@ function renderizarCarrito() {
     if (carrito.length === 0) {
         contenido.innerHTML = '<div class="carrito-vacio"><p>🛒 Tu carrito está vacío</p><p>¡Agrega vinos para comenzar!</p></div>';
         document.getElementById('btnProcederPago').disabled = true;
+        document.getElementById('subtotal').textContent = '$0.00';
+        document.getElementById('envio').textContent = '$0.00';
+        document.getElementById('totalCarrito').textContent = '$0.00';
         return;
     }
 
@@ -464,6 +473,179 @@ function eliminarDelCarrito(index) {
     actualizarContadorCarrito();
     renderizarCarrito();
     mostrarNotificacion('Vino removido del carrito', 'info');
+}
+
+function actualizarFormaEntrega() {
+    const envioSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked').value === 'envio';
+    document.getElementById('direccionEnvio').style.display = envioSeleccionado ? 'block' : 'none';
+    renderizarResumenPago();
+}
+
+function procederPago() {
+    if (carrito.length === 0) {
+        mostrarNotificacion('El carrito está vacío', 'error');
+        return;
+    }
+
+    abrirPago();
+}
+
+function abrirPago() {
+    document.getElementById('modalCarrito').classList.remove('active');
+    document.getElementById('modalPago').classList.add('active');
+    document.getElementById('pagoNombre').value = '';
+    document.getElementById('pagoEmail').value = '';
+    document.getElementById('pagoDireccion').value = '';
+    document.getElementById('pagoCiudad').value = '';
+    document.getElementById('pagoTarjeta').value = '';
+    document.getElementById('pagoVencimiento').value = '';
+    document.getElementById('pagoCvv').value = '';
+    document.querySelector('input[name="metodoEntrega"][value="envio"]').checked = true;
+    actualizarFormaEntrega();
+    renderizarResumenPago();
+}
+
+function cerrarPago() {
+    document.getElementById('modalPago').classList.remove('active');
+}
+
+function cancelarPago() {
+    cerrarPago();
+    abrirCarrito();
+}
+
+async function confirmarPago() {
+    const nombreCompleto = document.getElementById('pagoNombre').value.trim();
+    const email = document.getElementById('pagoEmail').value.trim();
+    const entrega = document.querySelector('input[name="metodoEntrega"]:checked').value;
+    const direccion = document.getElementById('pagoDireccion').value.trim();
+    const ciudad = document.getElementById('pagoCiudad').value.trim();
+    const tarjeta = document.getElementById('pagoTarjeta').value.trim();
+    const vencimiento = document.getElementById('pagoVencimiento').value.trim();
+    const cvv = document.getElementById('pagoCvv').value.trim();
+
+    if (!nombreCompleto || !email || !tarjeta || !vencimiento || !cvv) {
+        mostrarNotificacion('Completa todos los campos de pago', 'error');
+        return;
+    }
+
+    if (entrega === 'envio' && (!direccion || !ciudad)) {
+        mostrarNotificacion('Completa los datos de envío', 'error');
+        return;
+    }
+
+    if (carrito.length === 0) {
+        mostrarNotificacion('El carrito está vacío', 'error');
+        return;
+    }
+
+    try {
+        const partesNombre = nombreCompleto.split(' ');
+        const nombre = partesNombre[0];
+        const apellido = partesNombre.slice(1).join(' ') || 'Sin apellido';
+
+        const direccionEnvio = entrega === 'envio'
+            ? `${direccion}, ${ciudad}`
+            : 'Retiro en local';
+
+        const zonaEnvio = entrega === 'envio'
+            ? ciudad
+            : 'CABA';
+
+        const total = calcularTotalPago(entrega === 'retiro');
+
+        const clienteResponse = await fetch(`${config.apiUrl}/api/clientes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre,
+                apellido,
+                email,
+                telefono: '',
+                direccionEnvio,
+                tipo: 'MINORISTA',
+                cuit: null
+            })
+        });
+
+        if (!clienteResponse.ok) {
+            throw new Error('Error al crear cliente');
+        }
+
+        const cliente = await clienteResponse.json();
+
+        const pedidoResponse = await fetch(`${config.apiUrl}/api/pedidos`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_cliente: cliente.id_cliente,
+                estado: 'pendiente',
+                total,
+                direccion_envio: direccionEnvio,
+                zona_envio: zonaEnvio,
+                id_metodo_pago: 1
+            })
+        });
+
+        if (!pedidoResponse.ok) {
+            throw new Error('Error al crear pedido');
+        }
+
+        const pedido = await pedidoResponse.json();
+
+        for (const item of carrito) {
+            await fetch(`${config.apiUrl}/api/detalle-pedido`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_pedido: pedido.id,
+                    id_vino: item.id,
+                    cantidad: item.cantidad,
+                    precio_unitario: item.precioUnitario
+                })
+            });
+        }
+
+        carrito = [];
+        guardarCarrito();
+        actualizarContadorCarrito();
+        cerrarPago();
+
+        mostrarNotificacion(
+            `Pedido generado correctamente. Nº ${pedido.id}`,
+            'exito'
+        );
+
+    } catch (error) {
+        console.error(error);
+        mostrarNotificacion(
+            'Error al procesar el pedido. Revisá la consola.',
+            'error'
+        );
+    }
+}
+
+function calcularTotalPago(esRetiro) {
+    const subtotal = carrito.reduce((sum, item) => sum + item.precioUnitario * item.cantidad, 0);
+    const envio = esRetiro ? 0 : (subtotal > 5000 ? 0 : 500);
+    return subtotal + envio;
+}
+
+function renderizarResumenPago() {
+    const subtotal = carrito.reduce((sum, item) => sum + item.precioUnitario * item.cantidad, 0);
+    const esRetiro = document.querySelector('input[name="metodoEntrega"]:checked').value === 'retiro';
+    const envio = esRetiro ? 0 : (subtotal > 5000 ? 0 : 500);
+    const total = subtotal + envio;
+
+    document.getElementById('pagoSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('pagoEnvio').textContent = esRetiro ? '0.00 (Retiro)' : (envio === 0 ? 'GRATIS' : `$${envio.toFixed(2)}`);
+    document.getElementById('pagoTotal').textContent = `$${total.toFixed(2)}`;
 }
 
 function agregarAlCarrito() {
@@ -628,26 +810,6 @@ function buscarVinos() {
 }
 
 // ===== PAGO =====
-function procederPago() {
-    if (carrito.length === 0) {
-        mostrarNotificacion('El carrito está vacío', 'error');
-        return;
-    }
-
-    const total = carrito.reduce((sum, item) => sum + (item.precioUnitario * item.cantidad), 0);
-    
-    mostrarNotificacion(`¡Gracias por tu compra! Total: $${total.toFixed(2)}`, 'exito');
-    
-    // Aquí iría la integración con un sistema de pago real
-    setTimeout(() => {
-        carrito = [];
-        guardarCarrito();
-        actualizarContadorCarrito();
-        cerrarCarrito();
-        mostrarNotificacion('Pedido procesado correctamente', 'exito');
-    }, 2000);
-}
-
 // ===== UTILIDADES =====
 function mostrarNotificacion(mensaje, tipo = 'info') {
     const notif = document.getElementById('notificacion');

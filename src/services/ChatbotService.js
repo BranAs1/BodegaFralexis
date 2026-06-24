@@ -17,7 +17,7 @@ export class ChatbotService {
     if (!mensaje || mensaje.trim() === "") {
       return {
         respuesta:
-          "Escribime una consulta sobre vinos, envios, pagos, contacto o funciones de la bodega."
+          "Escribime una consulta sobre vinos, envíos, pagos, contacto o funciones de la bodega."
       };
     }
 
@@ -34,7 +34,7 @@ export class ChatbotService {
     ) {
       return {
         respuesta:
-          "¡Hola! Soy el asistente de Bodega Fralexis. Puedo ayudarte con vinos, precios, stock, metodos de pago, envios, contacto y funciones de la app."
+          "¡Hola! Soy el asistente de Bodega Fralexis. Puedo ayudarte con vinos, precios, stock, métodos de pago, envíos, contacto y funciones de la app."
       };
     }
 
@@ -53,7 +53,7 @@ export class ChatbotService {
       return {
         respuesta: faq
           ? faq.respuesta
-          : "Podes comunicarte con la bodega por WhatsApp al 11-1234-5678 o por email a contacto@bodegafralexis.com."
+          : "Podés comunicarte con la bodega por WhatsApp al 11-1234-5678 o por email a contacto@bodegafralexis.com."
       };
     }
 
@@ -74,7 +74,7 @@ export class ChatbotService {
       return {
         respuesta: faq
           ? faq.respuesta
-          : "Realizamos envios a todo el pais. En CABA y GBA el tiempo estimado es de 24 hs."
+          : "Realizamos envíos a todo el país. En CABA y GBA el tiempo estimado de entrega es de 24 a 48 horas hábiles."
       };
     }
 
@@ -82,27 +82,18 @@ export class ChatbotService {
       this.contiene(texto, [
         "pago",
         "pagos",
-        "mercado pago",
+        "metodo de pago",
+        "metodos de pago",
         "tarjeta",
-        "efectivo",
         "debito",
-        "credito"
+        "credito",
+        "mercado pago",
+        "efectivo"
       ])
     ) {
-      const metodos = await ChatbotRepository.buscarMetodosPago();
-
-      if (metodos.length === 0) {
-        return {
-          respuesta: "Por el momento no hay metodos de pago cargados."
-        };
-      }
-
-      const lista = metodos
-        .map((metodo) => `${metodo.nombre}: ${metodo.descripcion}`)
-        .join(". ");
-
       return {
-        respuesta: `Aceptamos los siguientes metodos de pago: ${lista}.`
+        respuesta:
+          "Aceptamos únicamente pagos con tarjeta de débito y tarjeta de crédito. No aceptamos efectivo ni Mercado Pago."
       };
     }
 
@@ -125,7 +116,7 @@ export class ChatbotService {
       return {
         respuesta: faq
           ? faq.respuesta
-          : "La app permite registrarse, iniciar sesion, ver el catalogo, consultar precios y stock, agregar productos al carrito, elegir metodo de pago y generar pedidos."
+          : "La app permite registrarse, iniciar sesión, ver el catálogo, consultar precios y stock, agregar productos al carrito, elegir método de pago y generar pedidos."
       };
     }
 
@@ -154,7 +145,7 @@ export class ChatbotService {
 
         if (todos.length === 0) {
           return {
-            respuesta: "Todavia no hay vinos cargados en el catalogo."
+            respuesta: "Todavía no hay vinos cargados en el catálogo."
           };
         }
 
@@ -192,7 +183,7 @@ export class ChatbotService {
 
     return {
       respuesta:
-        "Disculpame, solo puedo ayudarte con consultas sobre la bodega, vinos, productos, envios, pagos, contacto y funciones de la app."
+        "Disculpame, solo puedo ayudarte con consultas sobre la bodega, vinos, productos, envíos, pagos, contacto y funciones de la app."
     };
   }
 }

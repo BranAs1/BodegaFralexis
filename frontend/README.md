@@ -116,7 +116,7 @@ frontend/
 - **Logo y título**: "Bodega Fralexis"
 - **Barra de búsqueda**: Busca vinos por nombre, marca o tipo
 - **Botón 🛒 Carrito**: Abre modal con items agregados (contador actualizado)
-- **Botón 👤 Mi Cuenta**: Funcionalidad futura
+- Se eliminó la sección de cuenta para mantener el checkout simple
 
 ### Panel de Filtros (Izquierda)
 ```
