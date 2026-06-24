@@ -598,7 +598,7 @@ async function confirmarPago() {
         const pedido = await pedidoResponse.json();
 
         for (const item of carrito) {
-            await fetch(`${config.apiUrl}/api/detalle-pedido`, {
+            const detalleResponse = await fetch(`${config.apiUrl}/api/detalle-pedido`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -610,11 +610,18 @@ async function confirmarPago() {
                     precio_unitario: item.precioUnitario
                 })
             });
+
+            if (!detalleResponse.ok) {
+                throw new Error(`Error al crear detalle para ${item.nombre}`);
+            }
         }
 
         carrito = [];
         guardarCarrito();
         actualizarContadorCarrito();
+
+        await cargarVinos();
+
         cerrarPago();
 
         mostrarNotificacion(

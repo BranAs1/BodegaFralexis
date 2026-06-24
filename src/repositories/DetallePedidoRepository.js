@@ -50,6 +50,21 @@ export class DetallePedidoRepository {
   static async create(detalle) {
     const subtotal = detalle.cantidad * detalle.precio_unitario;
 
+    const [stockRows] = await pool.query(
+      `SELECT stock FROM vino WHERE id_vino = ?`,
+      [detalle.id_vino]
+    );
+
+    if (stockRows.length === 0) {
+      throw new Error("El vino no existe");
+    }
+
+    const stockActual = stockRows[0].stock;
+
+    if (stockActual < detalle.cantidad) {
+      throw new Error("No hay stock suficiente para completar el pedido");
+    }
+
     const [result] = await pool.query(
       `INSERT INTO detalle_pedido
       (id_pedido, id_vino, cantidad, precio_unitario, subtotal)
@@ -61,6 +76,13 @@ export class DetallePedidoRepository {
         detalle.precio_unitario,
         subtotal
       ]
+    );
+
+    await pool.query(
+      `UPDATE vino
+       SET stock = stock - ?
+       WHERE id_vino = ?`,
+      [detalle.cantidad, detalle.id_vino]
     );
 
     await pool.query(
